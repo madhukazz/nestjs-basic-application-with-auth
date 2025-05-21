@@ -21,10 +21,10 @@ export class MainSeeder implements Seeder{
         console.log('seeding users ...');
         const users = await userFactory.saveMany(10);
         
-        const propertyFactory = factoryManager.get(Property);
+        const propertyFactory = factoryManager.get(Property)
         const propertyFeatureFactory = factoryManager.get(PropertyFeature);
 
-        console.log('seeding users ...');
+        console.log('seeding properties ...');
 
         const properties = await Promise.all(
             Array(50).fill("").map(async () => {

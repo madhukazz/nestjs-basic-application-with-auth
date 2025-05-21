@@ -4,14 +4,19 @@ import { Property } from 'src/entities/property.entity';
 import { Repository } from 'typeorm';
 import { CreatePropertyDto } from './dto/create.property.dto';
 import { UpdatePropertyDto } from './dto/update.property.dto';
+import { PaginationDto } from './dto/pagination.dto';
+import { DEFAULT_PAGE_SIZE } from 'src/utils/constants';
 
 @Injectable()
 export class PropertyService {
 
 
     constructor(@InjectRepository(Property) private propertyRepo: Repository<Property>){}
-    async findAll() {
-        const property = await this.propertyRepo.find();
+    async findAll(paginationDto: PaginationDto) {
+        const property = await this.propertyRepo.find({
+            skip: paginationDto.skip,
+            take: paginationDto.limit ?? DEFAULT_PAGE_SIZE,
+        });
         if(!property) throw new NotFoundException();
         return property;
     }

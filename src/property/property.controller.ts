@@ -1,7 +1,5 @@
 import { Body, Controller, Delete, Get, Headers, HttpCode, Param, ParseBoolPipe, ParseIntPipe, Patch, Post, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CreatePropertyDto } from './dto/create.property.dto';
-import { HeadersDto } from './dto/headers.dto';
-import { RequestHeader } from './pipes/request.header';
 import { PropertyService } from './property.service';
 import { UpdatePropertyDto } from './dto/update.property.dto';
 import { PaginationDto } from './dto/pagination.dto';

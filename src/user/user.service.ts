@@ -29,7 +29,7 @@ export class UserService {
   async findOne(id: number) {
     return this.UserRepo.findOne({
       where: { id },
-      select: ['firstName', 'lastName', 'avatarUrl'],
+      select: ['firstName', 'lastName', 'email'],
     });
   }
 

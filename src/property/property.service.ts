@@ -9,43 +9,42 @@ import { DEFAULT_PAGE_SIZE } from 'src/utils/constants';
 
 @Injectable()
 export class PropertyService {
+  constructor(
+    @InjectRepository(Property) private propertyRepo: Repository<Property>,
+  ) {}
 
+  async findAll(paginationDto: PaginationDto) {
+    const property = await this.propertyRepo.find({
+      skip: paginationDto.skip,
+      take: paginationDto.limit ?? DEFAULT_PAGE_SIZE,
+    });
+    if (!property) throw new NotFoundException();
+    return property;
+  }
 
-    constructor(@InjectRepository(Property) private propertyRepo: Repository<Property>){}
-    
-    async findAll(paginationDto: PaginationDto) {
-        const property = await this.propertyRepo.find({
-            skip: paginationDto.skip,
-            take: paginationDto.limit ?? DEFAULT_PAGE_SIZE,
-        });
-        if(!property) throw new NotFoundException();
-        return property;
-    }
+  async findOne(id: number) {
+    const property = await this.propertyRepo.findOne({
+      where: {
+        id,
+      },
+    });
 
-    async findOne(id: number) {
-        const property = await this.propertyRepo.findOne({
-            where: {
-                id
-            }
-        })
+    if (!property) throw new NotFoundException();
 
-        if(!property) throw new NotFoundException();
+    return property;
+  }
 
-        return property;
-    }
+  async create(dto: CreatePropertyDto) {
+    return await this.propertyRepo.save(dto);
+  }
 
-    async create(dto: CreatePropertyDto) {
-        return await this.propertyRepo.save(dto)
-    }
+  async update(id: number, dto: UpdatePropertyDto) {
+    return this.propertyRepo.update({ id }, dto);
+  }
 
-    async update(id: number, dto: UpdatePropertyDto) {
-        return this.propertyRepo.update({ id }, dto);
-    }
-
-    async delete(id: number){
-        return this.propertyRepo.delete({
-            id,
-        })
-    }
-    
+  async delete(id: number) {
+    return this.propertyRepo.delete({
+      id,
+    });
+  }
 }

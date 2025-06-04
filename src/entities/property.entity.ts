@@ -1,36 +1,44 @@
-import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
-import { PropertyFeature } from "./property.feature.entity";
-import { User } from "./user.entity";
-import { PropertyType } from "./property.type.entity";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToMany,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { PropertyFeature } from './property.feature.entity';
+import { User } from './user.entity';
+import { PropertyType } from './property.type.entity';
 
 @Entity()
 export class Property {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    name: string;
+  @Column()
+  name: string;
 
-    @Column()
-    description: string;
+  @Column()
+  description: string;
 
-    @Column({ default : 0 })
-    price: number;
+  @Column({ default: 0 })
+  price: number;
 
-    @OneToOne(
-        () => PropertyFeature,
-        (PropertyFeature) => PropertyFeature.property,
-        { cascade: true }
-    )
-    propertyFeature: PropertyFeature;
+  @OneToOne(
+    () => PropertyFeature,
+    (PropertyFeature) => PropertyFeature.property,
+    { cascade: true },
+  )
+  propertyFeature: PropertyFeature;
 
-    @ManyToOne(() => User, (User) => User.properties)
-    @JoinColumn({ name: 'OwnerId'})
-    user: User;
+  @ManyToOne(() => User, (User) => User.properties)
+  @JoinColumn({ name: 'OwnerId' })
+  user: User;
 
-    @ManyToMany(() => User, (user) => user.likedProperties )
-    likedBy: User[];
+  @ManyToMany(() => User, (user) => user.likedProperties)
+  likedBy: User[];
 
-    @ManyToOne(() => PropertyType)
-    type: PropertyType;
+  @ManyToOne(() => PropertyType)
+  type: PropertyType;
 }

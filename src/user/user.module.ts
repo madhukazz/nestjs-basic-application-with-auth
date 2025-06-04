@@ -16,9 +16,11 @@ import { APP_PIPE } from '@nestjs/core';
         forbidNonWhitelisted: true,
         transform: true,
         transformOptions: {
-          enableImplicitConversion: true
-        }
-      })
-    },UserService],
+          enableImplicitConversion: true,
+        },
+      }),
+    },
+    UserService,
+  ],
 })
 export class UserModule {}

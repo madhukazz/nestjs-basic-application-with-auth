@@ -21,11 +21,11 @@ import { RefreshJwtStrategy } from './strategies/refresh.strategy';
   ],
   controllers: [AuthController],
   providers: [
-    AuthService, 
-    UserService, 
-    LocalStrategy, 
-    JwtStrategy, 
-    RefreshJwtStrategy
+    AuthService,
+    UserService,
+    LocalStrategy,
+    JwtStrategy,
+    RefreshJwtStrategy,
   ],
 })
 export class AuthModule {}

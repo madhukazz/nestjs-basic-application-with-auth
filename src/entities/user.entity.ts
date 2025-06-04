@@ -1,39 +1,48 @@
-import { BeforeInsert, Column, CreateDateColumn, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Property } from "./property.entity";
+import {
+  BeforeInsert,
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Property } from './property.entity';
 import * as bcrypt from 'bcrypt';
 
 @Entity()
-export class User{
-    @PrimaryGeneratedColumn()
-    id: number;
+export class User {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    firstName: string;
+  @Column()
+  firstName: string;
 
-    @Column()
-    lastName: string;
+  @Column()
+  lastName: string;
 
-    @Column()
-    email: string;
+  @Column()
+  email: string;
 
-    @Column({ nullable: true })
-    avatarUrl: string;
+  @Column({ nullable: true })
+  avatarUrl: string;
 
-    @CreateDateColumn()
-    createdAt: Date;
+  @CreateDateColumn()
+  createdAt: Date;
 
-    @Column({ nullable: true })
-    password: string;
+  @Column({ nullable: true })
+  password: string;
 
-    @OneToMany(() => Property, (Property) => Property.user)
-    properties: Property[];
+  @OneToMany(() => Property, (Property) => Property.user)
+  properties: Property[];
 
-    @ManyToMany(() => Property, (property) => property.likedBy)
-    @JoinTable({ name: 'user_liked_properties'})
-    likedProperties: Property[];
+  @ManyToMany(() => Property, (property) => property.likedBy)
+  @JoinTable({ name: 'user_liked_properties' })
+  likedProperties: Property[];
 
-    @BeforeInsert()
-    async hashPassword(){
-        this.password = await bcrypt.hash(this.password, 10);
-    }
+  @BeforeInsert()
+  async hashPassword() {
+    this.password = await bcrypt.hash(this.password, 10);
+  }
 }

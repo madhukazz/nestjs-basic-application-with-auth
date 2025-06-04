@@ -7,8 +7,8 @@ import { ConfigService } from '@nestjs/config';
 })
 export class AppController {
   constructor(
-    private readonly appService: AppService, 
-    private configService: ConfigService
+    private readonly appService: AppService,
+    private configService: ConfigService,
   ) {}
 
   @Get()

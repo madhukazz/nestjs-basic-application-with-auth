@@ -9,6 +9,19 @@ import { Repository } from 'typeorm';
 export class UserService {
   constructor(@InjectRepository(User) private UserRepo: Repository<User>) {}
 
+  async updateHashedRefreshToken(
+    userId: number,
+    hashedRefreshToken: string | null,
+  ) {
+    return await this.UserRepo.update(
+      { id: userId },
+      {
+        hashedRefreshToken:
+          hashedRefreshToken === null ? undefined : hashedRefreshToken,
+      },
+    );
+  }
+
   async create(createUserDto: CreateUserDto) {
     const user = await this.UserRepo.create(createUserDto);
     return await this.UserRepo.save(user);
@@ -29,7 +42,7 @@ export class UserService {
   async findOne(id: number) {
     return this.UserRepo.findOne({
       where: { id },
-      select: ['firstName', 'lastName', 'email'],
+      select: ['firstName', 'lastName', 'email', 'hashedRefreshToken'],
     });
   }
 
